@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"os"
 	"strings"
+	"time"
 )
 
 func main() {
@@ -41,21 +42,21 @@ func main() {
 				switch message := event.Message.(type) { // Messageの型を判定
 				case *linebot.TextMessage: // Messageがテキストの場合
 					testMessage := strings.Split(message.Text, ",") // ',' 区切りで分割してスライスにする
-					if testMessage[0] == view {
+					if testMessage[0] == view {                     // 表示の場合
 						if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(showItems(taskBook.tasks))).Do(); err != nil { // ReplyMessageで返信
 							log.Print(err) // エラー内容を出力
 						}
-					} else if len(testMessage) == addLimit && testMessage[0] == add {
-						taskBook.AddTask(inputTask(testMessage[1], testMessage[2]))
+					} else if len(testMessage) == addLimit && testMessage[0] == add { // 追加の場合
+						taskBook.AddTask(inputTask(testMessage[1], testMessage[2]))                                          // AddTaskでタスクを追加
 						if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("追加しました！")).Do(); err != nil { // ReplyMessageで返信
 							log.Print(err) // エラー内容を出力
 						}
-					} else if len(testMessage) == delLimit && testMessage[0] == del {
-						taskBook.DelTask(testMessage[1])
+					} else if len(testMessage) == delLimit && testMessage[0] == del { // 完了の場合
+						taskBook.DelTask(testMessage[1])                                                                                // DelTaskでタスクを削除
 						if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("削除しました！\nお疲れさまでした！")).Do(); err != nil { // ReplyMessageで返信
 							log.Print(err) // エラー内容を出力
 						}
-					} else {
+					} else {                                                                                                    // それ以外の場合
 						if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(message.Text)).Do(); err != nil { // ReplyMessageで返信
 							log.Print(err) // エラー内容を出力
 						}
@@ -98,7 +99,8 @@ func showItems(items []*Task) string {
 	// itemsの要素を1つずつ取り出してitemに入れて繰り返す
 	var text string
 	for i, item := range items {
-		text += fmt.Sprintf("[%d] %s : %s\n", i+1, item.Category, item.Date)
+		time, _ := time.Parse("2019年08月28日", item.Date)
+		text += fmt.Sprintf("[%d] %s : %s\n", i+1, item.Category, time)
 	}
 	//fmt.Println("===========")
 	return text
