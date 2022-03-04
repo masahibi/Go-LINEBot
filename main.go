@@ -41,7 +41,7 @@ func main() {
 			if event.Type == linebot.EventTypeMessage { // TypeがMessageの場合
 				switch message := event.Message.(type) { // Messageの型を判定
 				case *linebot.TextMessage: // Messageがテキストの場合
-					testMessage := strings.Split(message.Text, ",") // ',' 区切りで分割してスライスにする
+					testMessage := strings.Split(message.Text, " ") // ',' 区切りで分割してスライスにする
 					if testMessage[0] == view {                     // 表示の場合
 						if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(showItems(taskBook.tasks))).Do(); err != nil { // ReplyMessageで返信
 							log.Print(err) // エラー内容を出力
