@@ -42,7 +42,7 @@ func main() {
 					//}
 				case *linebot.StickerMessage: // Messageがスタンプの場合
 					replyMessage := fmt.Sprintf( // テキストを作成
-						"sticker id is %s, stickerResourceType is %s", message.StickerID, message.StickerResourceType) // スタンプIDとスタンプリソースタイプを出力
+						"sticker id is %s, stickerResourceType is %s", message.StickerID, message.StickerResourceType)      // スタンプIDとスタンプリソースタイプを出力
 					replyMessage = fmt.Sprint("It's a nice sticker !!")                                                     // テキストを作成
 					if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(replyMessage)).Do(); err != nil { // ReplyMessageで返信
 						log.Print(err) // エラー内容を出力
@@ -64,7 +64,7 @@ func showItems(items []*Task) string {
 	// itemsの要素を1つずつ取り出してitemに入れて繰り返す
 	var text string
 	for i, item := range items {
-		text = fmt.Sprintf("[%04d] %s:%s円\n", i+1, item.Category, item.Date)
+		text += fmt.Sprintf("[%04d] %s:%s円\n", i+1, item.Category, item.Date)
 	}
 	//fmt.Println("===========")
 	return text
