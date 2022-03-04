@@ -6,6 +6,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"strings"
 )
 
 func main() {
@@ -34,11 +35,16 @@ func main() {
 			if event.Type == linebot.EventTypeMessage { // TypeがMessageの場合
 				switch message := event.Message.(type) { // Messageの型を判定
 				case *linebot.TextMessage: // Messageがテキストの場合
-					if message.Text == "タスク" {
+					testMessage := strings.Split(message.Text, ",") // ',' 区切りで分割してスライスにする
+					if testMessage[0] == "タスク" {
 						if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(showItems(taskBook.tasks))).Do(); err != nil { // ReplyMessageで返信
 							log.Print(err) // エラー内容を出力
 						}
-					} else if message.Text == "追加" {
+					} else if testMessage[0] == "追加" {
+						if len(testMessage) != 3 {
+							break
+						}
+						taskBook.AddTask(inputTask(testMessage[1], testMessage[2]))
 						if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(showItems(taskBook.tasks))).Do(); err != nil { // ReplyMessageで返信
 							log.Print(err) // エラー内容を出力
 						}
@@ -49,7 +55,7 @@ func main() {
 					//}
 				case *linebot.StickerMessage: // Messageがスタンプの場合
 					replyMessage := fmt.Sprintf( // テキストを作成
-						"sticker id is %s, stickerResourceType is %s", message.StickerID, message.StickerResourceType)      // スタンプIDとスタンプリソースタイプを出力
+						"sticker id is %s, stickerResourceType is %s", message.StickerID, message.StickerResourceType) // スタンプIDとスタンプリソースタイプを出力
 					replyMessage = fmt.Sprint("It's a nice sticker !!")                                                     // テキストを作成
 					if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(replyMessage)).Do(); err != nil { // ReplyMessageで返信
 						log.Print(err) // エラー内容を出力
@@ -67,12 +73,12 @@ func main() {
 
 // Itemを入力し返す
 func inputTask(category string, date string) *Task {
-	var item Task
+	var task Task
 
-	item.Category = category
-	item.Date = date
+	task.Category = category
+	task.Date = date
 
-	return &item
+	return &task
 }
 
 // Itemの一覧を出力する
