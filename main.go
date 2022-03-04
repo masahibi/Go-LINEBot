@@ -48,6 +48,10 @@ func main() {
 						if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("追加しました！")).Do(); err != nil { // ReplyMessageで返信
 							log.Print(err) // エラー内容を出力
 						}
+					} else {
+						if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(message.Text)).Do(); err != nil { // ReplyMessageで返信
+							log.Print(err) // エラー内容を出力
+						}
 					}
 
 					//if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(message.Text)).Do(); err != nil { // ReplyMessageで返信
@@ -60,13 +64,7 @@ func main() {
 					if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(replyMessage)).Do(); err != nil { // ReplyMessageで返信
 						log.Print(err) // エラー内容を出力
 					}
-				default:
-					if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(message.Text)).Do(); err != nil { // ReplyMessageで返信
-						log.Print(err) // エラー内容を出力
-					}
-
 				}
-
 			}
 		}
 	})
