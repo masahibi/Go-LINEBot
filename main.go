@@ -45,7 +45,7 @@ func main() {
 							break
 						}
 						taskBook.AddTask(inputTask(testMessage[1], testMessage[2]))
-						if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(showItems(taskBook.tasks))).Do(); err != nil { // ReplyMessageで返信
+						if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("追加しました！")).Do(); err != nil { // ReplyMessageで返信
 							log.Print(err) // エラー内容を出力
 						}
 					}
