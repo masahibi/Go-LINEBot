@@ -34,9 +34,16 @@ func main() {
 			if event.Type == linebot.EventTypeMessage { // TypeがMessageの場合
 				switch message := event.Message.(type) { // Messageの型を判定
 				case *linebot.TextMessage: // Messageがテキストの場合
-					if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(showItems(taskBook.tasks))).Do(); err != nil { // ReplyMessageで返信
-						log.Print(err) // エラー内容を出力
+					if message.Text == "タスク" {
+						if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(showItems(taskBook.tasks))).Do(); err != nil { // ReplyMessageで返信
+							log.Print(err) // エラー内容を出力
+						}
+					} else if message.Text == "追加" {
+						if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(showItems(taskBook.tasks))).Do(); err != nil { // ReplyMessageで返信
+							log.Print(err) // エラー内容を出力
+						}
 					}
+
 					//if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(message.Text)).Do(); err != nil { // ReplyMessageで返信
 					//	log.Print(err) // エラー内容を出力
 					//}
