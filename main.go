@@ -106,8 +106,8 @@ func showItems(items []*Task) string {
 		//	//log.Fatal(err)
 		//	continue
 		//}
-		text += fmt.Sprintf("[%d] %s : %d月%d日\n", i+1, task.Category, int(date.Month()), date.Day())
-		//text += fmt.Sprintf("[%d] %s : %d\n", i+1, task.Category, date)
+		//text += fmt.Sprintf("[%d] %s : %d月%d日\n", i+1, task.Category, int(date.Month()), date.Day())
+		text += fmt.Sprintf("[%d] %s : %s\n", i+1, task.Category, date)
 	}
 	//fmt.Println("===========")
 	return text
