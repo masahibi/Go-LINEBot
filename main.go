@@ -12,34 +12,35 @@ func main() {
 
 	ChanellSecret := "667d346382f992671b4da40684f971bf"
 	ChanellToken := "9Cdz5cvK4etUt5abkUeJ8OKiR0lOr3Ys/eYJzZp8bZL3srIDMkVhwe5GqAlYMBKkU41cSAMeNvhKnEOc711qvnoTpYRye4kk0asipZvwzrgoDTuT8LWIRZFEhtaUmJN85K+UbBinsI9VaaAxeAL99gdB04t89/1O/w1cDnyilFU="
-	bot, err := linebot.New(ChanellSecret, ChanellToken)
-	if err != nil {
-		log.Fatal(err)
+	bot, err := linebot.New(ChanellSecret, ChanellToken) // LINEBotのインスタンスを生成
+	if err != nil {                                      // エラーが発生した場合
+		log.Fatal(err) // エラー内容を出力して終了
 	}
 
 	// Setup HTTP Server for receiving requests from LINE platform
 	http.HandleFunc("/callback", func(w http.ResponseWriter, req *http.Request) {
-		events, err := bot.ParseRequest(req)
-		if err != nil {
-			if err == linebot.ErrInvalidSignature {
-				w.WriteHeader(400)
-			} else {
-				w.WriteHeader(500)
+		events, err := bot.ParseRequest(req) // ParseRequestでリクエストをパース
+		if err != nil {                      // エラーが発生した場合
+			if err == linebot.ErrInvalidSignature { // シグネチャが誤っている場合
+				w.WriteHeader(400) // 400 Bad Requestを返す
+			} else { // それ以外のエラーの場合
+				w.WriteHeader(500) // 500 Internal Server Errorを返す
 			}
-			return
+			return // ParseRequestのエラーを返して終了
 		}
-		for _, event := range events {
-			if event.Type == linebot.EventTypeMessage {
-				switch message := event.Message.(type) {
-				case *linebot.TextMessage:
-					if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(message.Text)).Do(); err != nil {
-						log.Print(err)
+		for _, event := range events { // ParseRequestでパースしたイベントをループ
+			if event.Type == linebot.EventTypeMessage { // TypeがMessageの場合
+				switch message := event.Message.(type) { // Messageの型を判定
+				case *linebot.TextMessage: // Messageがテキストの場合
+					if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(message.Text)).Do(); err != nil { // ReplyMessageで返信
+						log.Print(err) // エラー内容を出力
 					}
-				case *linebot.StickerMessage:
-					replyMessage := fmt.Sprintf(
-						"sticker id is %s, stickerResourceType is %s", message.StickerID, message.StickerResourceType)
-					if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(replyMessage)).Do(); err != nil {
-						log.Print(err)
+				case *linebot.StickerMessage: // Messageがスタンプの場合
+					replyMessage := fmt.Sprintf( // テキストを作成
+						"sticker id is %s, stickerResourceType is %s", message.StickerID, message.StickerResourceType)      // スタンプIDとスタンプリソースタイプを出力
+					replyMessage = fmt.Sprintf("It's a nice sticker")                                                       // テキストを作成
+					if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(replyMessage)).Do(); err != nil { // ReplyMessageで返信
+						log.Print(err) // エラー内容を出力
 					}
 				}
 			}
@@ -47,7 +48,7 @@ func main() {
 	})
 	// This is just sample code.
 	// For actual use, you must support HTTPS by using `ListenAndServeTLS`, a reverse proxy or something else.
-	if err := http.ListenAndServe(":"+os.Getenv("PORT"), nil); err != nil {
-		log.Fatal(err)
+	if err := http.ListenAndServe(":"+os.Getenv("PORT"), nil); err != nil { // ListenAndServeでHTTPサーバを起動
+		log.Fatal(err) // ListenAndServeのエラーを出力して終了
 	}
 }
