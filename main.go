@@ -103,7 +103,8 @@ func showItems(items []*Task) string {
 		//date, _ := time.Parse("2001/01/01", task.Date)
 		date, err := time.Parse("2001/02/05", task.Date)
 		if err != nil {
-			log.Fatal(err)
+			//log.Fatal(err)
+			continue
 		}
 		//text += fmt.Sprintf("[%d] %s : %d月%d日\n", i+1, task.Category, int(date.Month()), date.Day())
 		text += fmt.Sprintf("[%d] %s : %d\n", i+1, task.Category, date)
