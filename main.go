@@ -38,7 +38,7 @@ func main() {
 				case *linebot.StickerMessage: // Messageがスタンプの場合
 					replyMessage := fmt.Sprintf( // テキストを作成
 						"sticker id is %s, stickerResourceType is %s", message.StickerID, message.StickerResourceType)      // スタンプIDとスタンプリソースタイプを出力
-					replyMessage = fmt.Sprintf("It's a nice sticker")                                                       // テキストを作成
+					replyMessage = fmt.Sprintf("It's a nice sticker !!")                                                    // テキストを作成
 					if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(replyMessage)).Do(); err != nil { // ReplyMessageで返信
 						log.Print(err) // エラー内容を出力
 					}
