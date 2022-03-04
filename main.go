@@ -101,11 +101,10 @@ func showItems(items []*Task) string {
 	for i, task := range items {
 		task.Date = "2022/" + task.Date + " 15:04:05.000"
 		//date, _ := time.Parse("2001/01/01", task.Date)
-		date, _ := time.Parse("2006/1/2 15:04:05.000", task.Date)
-		//if err != nil {
-		//	//log.Fatal(err)
-		//	continue
-		//}
+		date, err := time.Parse("2006/1/2 15:04:05.000", task.Date)
+		if err != nil {
+			log.Fatal(err)
+		}
 		text += fmt.Sprintf("[%d] %s : %d月%d日\n", i+1, task.Category, int(date.Month()), date.Day())
 		//text += fmt.Sprintf("[%d] %s : %s\n", i+1, task.Category, date)
 	}
