@@ -99,9 +99,9 @@ func showItems(items []*Task) string {
 	// itemsの要素を1つずつ取り出してitemに入れて繰り返す
 	var text string
 	for i, task := range items {
-		task.Date = "2022/" + task.Date
+		task.Date = "2022/" + task.Date + " 15:04:05.000"
 		//date, _ := time.Parse("2001/01/01", task.Date)
-		date, _ := time.Parse("2001/02/05", task.Date)
+		date, _ := time.Parse("2006/01/02 15:04:05.000", task.Date)
 		//if err != nil {
 		//	//log.Fatal(err)
 		//	continue
