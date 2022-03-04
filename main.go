@@ -98,11 +98,11 @@ func showItems(items []*Task) string {
 	//fmt.Println("===========")
 	// itemsの要素を1つずつ取り出してitemに入れて繰り返す
 	var text string
-	var date time.Time
 	for i, task := range items {
 		task.Date = "2022/" + task.Date
-		date, _ = time.Parse("2001/01/01", task.Date)
-		text += fmt.Sprintf("[%d] %s : %d月%d日\n", i+1, task.Category, int(date.Month()), date.Day())
+		date, _ := time.Parse("2001/01/01", task.Date)
+		//text += fmt.Sprintf("[%d] %s : %d月%d日\n", i+1, task.Category, int(date.Month()), date.Day())
+		text += fmt.Sprintf("[%d] %s : %d\n", i+1, task.Category, date)
 	}
 	//fmt.Println("===========")
 	return text
