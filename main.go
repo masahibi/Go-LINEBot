@@ -29,23 +29,28 @@ func main() {
 			}
 			return // ParseRequestのエラーを返して終了
 		}
-		taskBook := NewTaskBook("taskbook.txt")
+		taskBook := NewTaskBook("taskbook.txt") // TaskBookのインスタンスを生成
+		view := "タスク"
+		add := "追加"
+		addLimit := 3 // 追加、内容、日付
+		del := "完了"
+		delLimit := 2 // 完了、内容
 
 		for _, event := range events { // ParseRequestでパースしたイベントをループ
 			if event.Type == linebot.EventTypeMessage { // TypeがMessageの場合
 				switch message := event.Message.(type) { // Messageの型を判定
 				case *linebot.TextMessage: // Messageがテキストの場合
 					testMessage := strings.Split(message.Text, ",") // ',' 区切りで分割してスライスにする
-					if testMessage[0] == "タスク" {
+					if testMessage[0] == view {
 						if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(showItems(taskBook.tasks))).Do(); err != nil { // ReplyMessageで返信
 							log.Print(err) // エラー内容を出力
 						}
-					} else if len(testMessage) == 3 && testMessage[0] == "追加" {
+					} else if len(testMessage) == addLimit && testMessage[0] == add {
 						taskBook.AddTask(inputTask(testMessage[1], testMessage[2]))
 						if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("追加しました！")).Do(); err != nil { // ReplyMessageで返信
 							log.Print(err) // エラー内容を出力
 						}
-					} else if len(testMessage) == 2 && testMessage[0] == "完了" {
+					} else if len(testMessage) == delLimit && testMessage[0] == del {
 						taskBook.DelTask(testMessage[1])
 						if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("削除しました！\nお疲れさまでした！")).Do(); err != nil { // ReplyMessageで返信
 							log.Print(err) // エラー内容を出力
@@ -61,7 +66,7 @@ func main() {
 					//}
 				case *linebot.StickerMessage: // Messageがスタンプの場合
 					replyMessage := fmt.Sprintf( // テキストを作成
-						"sticker id is %s, stickerResourceType is %s", message.StickerID, message.StickerResourceType) // スタンプIDとスタンプリソースタイプを出力
+						"sticker id is %s, stickerResourceType is %s", message.StickerID, message.StickerResourceType)      // スタンプIDとスタンプリソースタイプを出力
 					replyMessage = fmt.Sprint("It's a nice sticker !!")                                                     // テキストを作成
 					if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(replyMessage)).Do(); err != nil { // ReplyMessageで返信
 						log.Print(err) // エラー内容を出力
