@@ -115,3 +115,39 @@ func (taskBook *TaskBook) AddTask(task *Task) {
 		log.Fatal(err) // エラー内容を出力して終了
 	}
 }
+
+// 新しいTaskを追加する
+func (taskBook *TaskBook) DelTask(text string) {
+	//taskBook.tasks = append(taskBook.tasks, task) // 追加する
+
+	f, err := os.Create(taskBook.file) // ファイルを書込みで開く
+	//if err != nil {
+	//	fmt.Fprintln(os.Stderr, "エラー：", err) // 標準エラー出力に出力
+	//	os.Exit(1)                           // 終了コードを指定してプログラムを終了
+	//}
+	if err != nil { // エラーが発生した場合
+		log.Fatal(err) // エラー内容を出力して終了
+	}
+
+	for _, task := range taskBook.tasks { // タスクを1つずつ取り出す
+		if task.Category == text {
+			continue
+		} // 引数に指定したタスクと同じなら、書き込まずに削除する
+		_, err := fmt.Fprintf(f, "%s,%s\n", task.Category, task.Date) // ファイルに書き込む
+		//if err != nil {
+		//	fmt.Fprintln(os.Stderr, "エラー：", err) // 標準エラー出力に出力
+		//	os.Exit(1)                           // 終了コードを指定してプログラムを終了
+		//}
+		if err != nil { // エラーが発生した場合
+			log.Fatal(err) // エラー内容を出力して終了
+		}
+	}
+
+	//if err := f.Close(); err != nil {
+	//	fmt.Fprintln(os.Stderr, "エラー：", err) // 標準エラー出力に出力
+	//	os.Exit(1)                           // 終了コードを指定してプログラムを終了
+	//}
+	if err := f.Close(); err != nil {
+		log.Fatal(err) // エラー内容を出力して終了
+	}
+}

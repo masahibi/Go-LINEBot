@@ -40,12 +40,14 @@ func main() {
 						if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(showItems(taskBook.tasks))).Do(); err != nil { // ReplyMessageで返信
 							log.Print(err) // エラー内容を出力
 						}
-					} else if testMessage[0] == "追加" {
-						if len(testMessage) != 3 {
-							break
-						}
+					} else if len(testMessage) == 3 && testMessage[0] == "追加" {
 						taskBook.AddTask(inputTask(testMessage[1], testMessage[2]))
 						if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("追加しました！")).Do(); err != nil { // ReplyMessageで返信
+							log.Print(err) // エラー内容を出力
+						}
+					} else if len(testMessage) == 2 && testMessage[0] == "完了" {
+						taskBook.DelTask(testMessage[1])
+						if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("削除しました！\nお疲れさまでした！")).Do(); err != nil { // ReplyMessageで返信
 							log.Print(err) // エラー内容を出力
 						}
 					} else {
@@ -59,7 +61,7 @@ func main() {
 					//}
 				case *linebot.StickerMessage: // Messageがスタンプの場合
 					replyMessage := fmt.Sprintf( // テキストを作成
-						"sticker id is %s, stickerResourceType is %s", message.StickerID, message.StickerResourceType)      // スタンプIDとスタンプリソースタイプを出力
+						"sticker id is %s, stickerResourceType is %s", message.StickerID, message.StickerResourceType) // スタンプIDとスタンプリソースタイプを出力
 					replyMessage = fmt.Sprint("It's a nice sticker !!")                                                     // テキストを作成
 					if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(replyMessage)).Do(); err != nil { // ReplyMessageで返信
 						log.Print(err) // エラー内容を出力
@@ -75,7 +77,7 @@ func main() {
 	}
 }
 
-// Itemを入力し返す
+// Taskを入力し返す
 func inputTask(category string, date string) *Task {
 	var task Task
 
@@ -85,7 +87,7 @@ func inputTask(category string, date string) *Task {
 	return &task
 }
 
-// Itemの一覧を出力する
+// Taskの一覧を出力する
 func showItems(items []*Task) string {
 	//fmt.Println("===========")
 	// itemsの要素を1つずつ取り出してitemに入れて繰り返す
