@@ -58,13 +58,23 @@ func main() {
 	}
 }
 
+// Itemを入力し返す
+func inputTask(category string, date string) *Task {
+	var item Task
+
+	item.Category = category
+	item.Date = date
+
+	return &item
+}
+
 // Itemの一覧を出力する
 func showItems(items []*Task) string {
 	//fmt.Println("===========")
 	// itemsの要素を1つずつ取り出してitemに入れて繰り返す
 	var text string
 	for i, item := range items {
-		text += fmt.Sprintf("[%04d] %s:%s円\n", i+1, item.Category, item.Date)
+		text += fmt.Sprintf("[%d] %s : %s\n", i+1, item.Category, item.Date)
 	}
 	//fmt.Println("===========")
 	return text
