@@ -100,7 +100,8 @@ func showItems(items []*Task) string {
 	var text string
 	var date time.Time
 	for i, task := range items {
-		date, _ = time.Parse("08/28", task.Date)
+		task.Date = "2022/" + task.Date
+		date, _ = time.Parse("2001/01/01", task.Date)
 		text += fmt.Sprintf("[%d] %s : %d月%d日\n", i+1, task.Category, int(date.Month()), date.Day())
 	}
 	//fmt.Println("===========")
