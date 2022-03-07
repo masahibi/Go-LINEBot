@@ -287,7 +287,7 @@ $ heroku config:set YOUR_CHANNEL_SECRET="Channel Secretの欄の文字列" --app
 
 ## Go **ファイル（main.py）の作成**
 
-**~~main.py**には、以下のようなコードを記載しました。~~
+~~main.py**には、以下のようなコードを記載しました。~~
 
 各ソースコードを見てください。
 
