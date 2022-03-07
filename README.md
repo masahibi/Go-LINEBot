@@ -18,7 +18,7 @@ LINE が一番見ることが多いため、今回は LINE をプラットフォ
 
 - Windows11
 - Go 1.17.8
-- Heroku
+- Heroku 7.59.2
 
 ## **LINE BOTの仕組み**
 
