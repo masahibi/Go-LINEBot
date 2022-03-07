@@ -26,7 +26,7 @@ LINE が一番見ることが多いため、今回は LINE をプラットフォ
 
 【LINE BOTの仕組み】
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/2e10c572-2aad-4445-b76b-ca6582a4a4a9/Untitled.png)
+![Untitled](https://user-images.githubusercontent.com/59988255/157020763-64911d60-5614-4eaa-b634-caf45c5f734c.png)
 
 1. ユーザーがボットにメッセージを送ると、Webhookを利用し、Messaging APIを通して、Herokuへリクエストを送信します。
 2. Herokuが受け取ったリクエストを、Goで実装したソースコードが処理し、値をHerokuへ返します。
