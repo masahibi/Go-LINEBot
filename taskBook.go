@@ -62,7 +62,7 @@ func (taskBook *TaskBook) readItems() {
 		//	os.Exit(1)                           // 終了コードを指定してプログラムを終了
 		//}
 		if err != nil { // エラーが発生した場合
-			log.Fatal(err) // エラー内容を出力して終了
+			log.Print(err) // エラー内容を出力
 		}
 
 		task := &Task{ // Task構造体を作成
@@ -78,7 +78,7 @@ func (taskBook *TaskBook) readItems() {
 	//	os.Exit(1)                           // 終了コードを指定してプログラムを終了
 	//}
 	if err := s.Err(); err != nil { // エラーが発生した場合
-		log.Fatal(err) // エラー内容を出力して終了
+		log.Print(err) // エラー内容を出力
 	}
 
 }
@@ -93,7 +93,7 @@ func (taskBook *TaskBook) AddTask(task *Task) {
 	//	os.Exit(1)                           // 終了コードを指定してプログラムを終了
 	//}
 	if err != nil { // エラーが発生した場合
-		log.Fatal(err) // エラー内容を出力して終了
+		log.Print(err) // エラー内容を出力
 	}
 
 	for _, task := range taskBook.tasks { // タスクを1つずつ取り出す
@@ -103,7 +103,7 @@ func (taskBook *TaskBook) AddTask(task *Task) {
 		//	os.Exit(1)                           // 終了コードを指定してプログラムを終了
 		//}
 		if err != nil { // エラーが発生した場合
-			log.Fatal(err) // エラー内容を出力して終了
+			log.Print(err) // エラー内容を出力
 		}
 	}
 
@@ -112,7 +112,7 @@ func (taskBook *TaskBook) AddTask(task *Task) {
 	//	os.Exit(1)                           // 終了コードを指定してプログラムを終了
 	//}
 	if err := f.Close(); err != nil {
-		log.Fatal(err) // エラー内容を出力して終了
+		log.Print(err) // エラー内容を出力
 	}
 }
 
@@ -126,7 +126,7 @@ func (taskBook *TaskBook) DelTask(text string) {
 	//	os.Exit(1)                           // 終了コードを指定してプログラムを終了
 	//}
 	if err != nil { // エラーが発生した場合
-		log.Fatal(err) // エラー内容を出力して終了
+		log.Print(err) // エラー内容を出力
 	}
 
 	for _, task := range taskBook.tasks { // タスクを1つずつ取り出す
@@ -139,7 +139,7 @@ func (taskBook *TaskBook) DelTask(text string) {
 		//	os.Exit(1)                           // 終了コードを指定してプログラムを終了
 		//}
 		if err != nil { // エラーが発生した場合
-			log.Fatal(err) // エラー内容を出力して終了
+			log.Print(err) // エラー内容を出力
 		}
 	}
 
@@ -148,6 +148,6 @@ func (taskBook *TaskBook) DelTask(text string) {
 	//	os.Exit(1)                           // 終了コードを指定してプログラムを終了
 	//}
 	if err := f.Close(); err != nil {
-		log.Fatal(err) // エラー内容を出力して終了
+		log.Print(err) // エラー内容を出力
 	}
 }
