@@ -341,4 +341,4 @@ LINE BOTのイベントを、リアルタイムで通知する為に使います
 
 LINE Developers 上の QR コードから友達追加してください。
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/43f37344-2f39-4feb-9bbb-d03de5bddb88/Untitled.png)
+![Untitled (1)](https://user-images.githubusercontent.com/59988255/157020920-d41cad36-13e1-4d9b-9839-c41d7f3d63a0.png)
